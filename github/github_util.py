@@ -71,6 +71,9 @@ def load_history_df(metric, owner, repo):
 
 
 def save_history_df(df, owner, repo, metric):
+    if not os.path.isdir(data_dir):
+        os.mkdir(data_dir)
+
     filename = f'github_{owner}_{repo}_{metric}.csv'
     df.to_csv(os.path.join(data_dir, filename), index=False, encoding='utf-8-sig')
     print(f'--- File successfully saved to {filename}! ')
