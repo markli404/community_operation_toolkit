@@ -32,6 +32,6 @@ Notice that `My_Project` is just a name you give to the project, it does not hav
 However `owner` and `repo` has to be exactly the same as the project claimed.
 ## 2. Run Dashboard
 ```commandline
-python ./CommunityHealthiness/main.py
+python main.py
 ```
 Go to `http://127.0.0.1:8050/` and then click Update History Button. (It might take a while to download the data for the first time)
