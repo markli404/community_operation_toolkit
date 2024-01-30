@@ -1,0 +1,7 @@
+dash
+matplotlib==3.7.2
+pandas==2.0.3
+plotly==5.9.0
+PyYAML==6.0
+PyYAML==6.0.1
+Requests==2.31.0

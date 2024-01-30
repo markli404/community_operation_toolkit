@@ -1,0 +1,14 @@
+github:
+  token: your_token_goes_here
+  data_dir: ./data
+Yi:
+  owner: 01-ai
+  repo: Yi
+Qwen:
+  owner: QwenLM
+  repo: Qwen
+smaug:
+  owner: harvard-acc
+  repo: smaug
+llm_name: Yi
+all: [Yi, Qwen, smaug]
