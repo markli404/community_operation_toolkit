@@ -2,11 +2,11 @@
 ## 0. Setup Environment
 ### 0.a Clone GitHub Repository
 ```commandline
-git clone https://github.com/markli404/CommunityHealthiness.git
+git clone https://github.com/markli404/community_healthiness.git
 ```
 ### 0.b Install Required Packages
 ```commandline
-cd CommunityHealthiness
+cd community_healthiness
 pip install -r requirements.txt
 ```
 ## 1. Edit Configurations
