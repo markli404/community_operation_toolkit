@@ -1,6 +1,5 @@
 github:
-  token: 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
-  data_dir: ./data
+  token:
 Yi:
   owner: 01-ai
   repo: Yi
