@@ -1,5 +1,5 @@
 github:
-  token: your_token_goes_here
+  token: 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
   data_dir: ./data
 Yi:
   owner: 01-ai
@@ -7,8 +7,27 @@ Yi:
 Qwen:
   owner: QwenLM
   repo: Qwen
+Baichuan2:
+  owner: baichuan-inc
+  repo: Baichuan2
+Baichuan-7B:
+  owner: baichuan-inc
+  repo: Baichuan-7B
+Baichuan-13B:
+  owner: baichuan-inc
+  repo: Baichuan-13B
+InternLM:
+  owner: InternLM
+  repo: InternLM
 smaug:
   owner: harvard-acc
   repo: smaug
+llama:
+  owner: facebookresearch
+  repo: llama
+gemma:
+  owner: google-deepmind
+  repo: gemma
 llm_name: Yi
-all: [Yi, Qwen, smaug]
+all: [Yi, Qwen, Baichuan2, Baichuan-7B, Baichuan-13B, InternLM, llama, gemma]
+hugging_face: [Yi, Qwen, Baichuan, InternLM, llama, gemma]
