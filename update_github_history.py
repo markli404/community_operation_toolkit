@@ -2,33 +2,10 @@ import requests
 import yaml
 from util.datetime_util import *
 from util.util import *
-
+from util.github_util import *
 # Load configuration settings from a YAML file.
 with open('./config.yaml', 'r') as file:
     config = yaml.safe_load(file)
-
-
-# Function to make a paginated request to GitHub API and gather all data from a specific endpoint.
-def make_github_request(url, params=None):
-    params = params or {}
-    params.update({"per_page": 100})  # Default to 100 items per page for maximum efficiency.
-    all_data = []
-    headers = {
-        'Authorization': f'token {config["github"]["token"]}',  # Authentication token from config.
-        'Accept': 'application/vnd.github.v3.star+json'  # Ensure compatibility with the GitHub API version 3.
-    }
-    # Loop to handle pagination.
-    while True:
-        response = requests.get(url, headers=headers, params=params)
-        # Break loop if request fails or no more data is available.
-        if response.status_code != 200 or not response.json():
-            break
-        all_data.extend(response.json())
-        # If there's a next page, update the URL and continue; otherwise, break.
-        if 'next' not in response.links:
-            break
-        url = response.links['next']['url']
-    return all_data
 
 
 # Convert raw data into a list of datetime objects.
@@ -40,7 +17,7 @@ def make_datetime_list(raw_data, key):
 def fetch_metric_by_repo(metric, keywords, owner, repo):
     print(f'Fetching github {metric} on {owner}:{repo}')
     full_url = f'https://api.github.com/repos/{owner}/{repo}/{metric}'
-    raw_dates = make_github_request(full_url)
+    raw_dates = make_github_request(full_url, config['github']['token'])
     return make_datetime_list(raw_dates, keywords)
 
 
@@ -80,9 +57,9 @@ def fetch_all_issues(owner, repo):
     print(f'Fetching github issues on {owner}:{repo}...')
     issues = []
     open_issue_url = f"https://api.github.com/repos/{owner}/{repo}/issues"
-    issues.extend(make_github_request(open_issue_url))
+    issues.extend(make_github_request(open_issue_url, config['github']['token']))
     closed_issue_url = f"https://api.github.com/repos/{owner}/{repo}/issues?state=closed"
-    issues.extend(make_github_request(closed_issue_url))
+    issues.extend(make_github_request(closed_issue_url, config['github']['token']))
     return issues
 
 
@@ -112,7 +89,7 @@ def formatting_issue(repo, issue):
     else:
         issue_df['open_duration'] = '大于4天'
     # Count comments and calculate reply time for the first relevant comment.
-    comments = make_github_request(issue['comments_url'])
+    comments = make_github_request(issue['comments_url'], config['github']['token'])
     issue_df['# of comments'] = len(comments)
     for comment in comments:
         if comment['author_association'] in ['CONTRIBUTOR', 'MEMBER']:
