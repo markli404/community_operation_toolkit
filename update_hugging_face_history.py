@@ -90,7 +90,7 @@ def get_all_hugging_face_history():
 
     # Label each model card with its week and month of update
     all_model_card_df = pd.DataFrame(all_model_card_df)
-    all_model_card_df = lable_week_and_month(all_model_card_df, 'updated_time')
+    all_model_card_df = lable_week_and_month(all_model_card_df, 'updated_time', 'base_model')
 
     return all_model_card_df
 

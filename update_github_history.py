@@ -24,6 +24,7 @@ def fetch_metric_by_repo(metric, keywords, owner, repo):
 # Retrieve and process star history for a specific repository.
 def get_star_history_by_repo(owner, repo):
     dates_raw = fetch_metric_by_repo('stargazers', 'starred_at', owner=owner, repo=repo)
+
     df = pd.DataFrame({
         'name': [repo] * len(dates_raw),
         'dates': dates_raw
@@ -38,6 +39,7 @@ def get_star_history_by_repo(owner, repo):
 
     df['cumulative'] = df['counts'].cumsum()
     df.insert(0, 'name', [repo] * len(df))
+
     return df
 
 
@@ -45,10 +47,12 @@ def get_star_history_by_repo(owner, repo):
 def update_github_star():
     print('--- Generating github star history ---')
     star_df = []
-    for owner, repo in [(config[llm]['owner'], config[llm]['repo']) for llm in config['all']]:
+    for owner, repo in [(config[llm]['owner'], config[llm]['repo']) for llm in config['github_repo']]:
         star_df.append(get_star_history_by_repo(owner, repo))
+
     star_df = pd.concat(star_df)
     star_df = lable_week_and_month(star_df, 'dates')
+
     export_to_excel(star_df, "github_star.xlsx")
 
 
@@ -109,7 +113,7 @@ def update_issue_history():
         print('Previous history not found... Trying to regenerate everything.')
     all_issues_df = []
 
-    for owner, repo in [(config[llm]['owner'], config[llm]['repo']) for llm in config['all']]:
+    for owner, repo in [(config[llm]['owner'], config[llm]['repo']) for llm in config['github_repo']]:
         # Loading recorded issues, avoiding unnecessary calculations
         if previous_issue_df is not None:
             recorded_issues = previous_issue_df[previous_issue_df['name'] == repo]
@@ -122,10 +126,10 @@ def update_issue_history():
         new_issues = []
         issues = fetch_all_issues(owner, repo)
         for issue in issues:
-            # Remove official posts
-            if issue['author_association'] != 'NONE' and 'pull_request' not in issue.keys():
-                print(f' --- Removing official posts: ' + issue['title'])
-                continue
+            # TODO: Remove official posts
+            # if issue['author_association'] != 'NONE' and 'pull_request' not in issue.keys():
+            #     print(f' --- Removing official posts: ' + issue['title'])
+            #     continue
 
             # if this issue is recorded in the history...
             issue_id = issue['number']
@@ -145,17 +149,18 @@ def update_issue_history():
         # make new_records a DataFrame
         if new_issues:
             new_issues = pd.DataFrame(new_issues)
-            new_issues = lable_week_and_month(new_issues, 'created_at')
+            # new_issues = lable_week_and_month(new_issues, 'created_at')
             all_issues_df.append(new_issues)
 
     if previous_issue_df is not None:
         all_issues_df.append(previous_issue_df)
 
     all_issues_df = pd.concat(all_issues_df)
+    all_issues_df = lable_week_and_month(all_issues_df, 'created_at')
     export_to_excel(all_issues_df, "github_issue.xlsx")
 
 
 # Main execution block to update GitHub star and issue history.
 if __name__ == "__main__":
-    update_github_star()
-    # update_issue_history()
+    # update_github_star()
+    update_issue_history()
