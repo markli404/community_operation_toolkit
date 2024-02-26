@@ -1,6 +1,6 @@
 import yaml
 import requests
-
+import sys
 
 # Function to make a paginated request to GitHub API and gather all data from a specific endpoint.
 def make_github_request(url, token, params=None):
@@ -13,7 +13,12 @@ def make_github_request(url, token, params=None):
     }
     # Loop to handle pagination.
     while True:
-        response = requests.get(url, headers=headers, params=params)
+        try:
+            response = requests.get(url, headers=headers, params=params)
+        except:
+            print("Some error occurred while fetching through GitHub API")
+            sys.exit(1)
+
         # Break loop if request fails or no more data is available.
         if response.status_code != 200 or not response.json():
             break
