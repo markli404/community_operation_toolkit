@@ -27,6 +27,8 @@ llama:
 gemma:
   owner: google-deepmind
   repo: gemma
-llm_name: Yi
-all: [Yi, Qwen, Baichuan2, Baichuan-7B, Baichuan-13B, InternLM, llama, gemma]
-hugging_face: [Yi, Qwen, Baichuan, InternLM, llama, gemma]
+mistral:
+  owner: mistralai
+  repo: mistral-src
+github_repo: [Yi, Qwen, Baichuan2, Baichuan-7B, Baichuan-13B, InternLM, llama, gemma, mistral]
+hugging_face: [Yi, Qwen, Baichuan, InternLM, llama, gemma, mistral]
