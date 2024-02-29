@@ -31,7 +31,7 @@ def main():
 
     if not any([args.wechat, args.github]):
         call_wechat_FAQ(args)
-        call_github_FAQ(args)
+        # call_github_FAQ(args)
         return
 
     if args.wechat:
