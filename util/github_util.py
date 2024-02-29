@@ -28,3 +28,14 @@ def make_github_request(url, token, params=None):
             break
         url = response.links['next']['url']
     return all_data
+
+
+# Fetch all issues (both open and closed) for a GitHub repository.
+def fetch_all_issues(owner, repo, token):
+    print(f'Fetching github issues on {owner}:{repo}...')
+    issues = []
+    open_issue_url = f"https://api.github.com/repos/{owner}/{repo}/issues"
+    issues.extend(make_github_request(open_issue_url, token))
+    closed_issue_url = f"https://api.github.com/repos/{owner}/{repo}/issues?state=closed"
+    issues.extend(make_github_request(closed_issue_url, token))
+    return issues
