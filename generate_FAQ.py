@@ -32,7 +32,7 @@ def wechat_to_faq(filename='./wechat/message.csv', chunk_size=100, overlap=20):
         messages = ''.join(messages)
         FAQ.append(api_client.get_FAQ_from_wechat_message(messages))
         # make sure it does not exceed request limit
-        time.sleep(30)
+        time.sleep(20)
 
     # save FAQ into text file
     with open('wechat/wechat_FAQ.txt', 'w', encoding="utf-8") as f:
