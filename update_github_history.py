@@ -56,17 +56,6 @@ def update_github_star():
     export_to_excel(star_df, "github_star.xlsx")
 
 
-# Fetch all issues (both open and closed) for a GitHub repository.
-def fetch_all_issues(owner, repo):
-    print(f'Fetching github issues on {owner}:{repo}...')
-    issues = []
-    open_issue_url = f"https://api.github.com/repos/{owner}/{repo}/issues"
-    issues.extend(make_github_request(open_issue_url, config['github']['token']))
-    closed_issue_url = f"https://api.github.com/repos/{owner}/{repo}/issues?state=closed"
-    issues.extend(make_github_request(closed_issue_url, config['github']['token']))
-    return issues
-
-
 # Format a single issue into a structured dictionary.
 def formatting_issue(repo, issue):
     issue_df = {}
@@ -78,7 +67,7 @@ def formatting_issue(repo, issue):
     issue_df['created_at'] = create_time.date()
     issue_df['state'] = issue['state']
     issue_df['author'] = issue['user']['login']
-    issue_df['PR'] = str('pull_request' in issue.keys())
+    issue_df['PR'] = "TRUE" if 'pull_request' in issue.keys() else 'FALSE'
     if issue['closed_at']:
         open_duration = datedelta_to_minutes(
             ISO_string_to_datetime(issue['closed_at']) - create_time)
@@ -122,9 +111,9 @@ def update_issue_history():
             recorded_issues = pd.DataFrame([])
             recorded_issues_id = []
 
-        # Processing all fetched issues from github
+        # Processing all fetched issues from GitHub
         new_issues = []
-        issues = fetch_all_issues(owner, repo)
+        issues = fetch_all_issues(owner, repo, config['github']['token'])
         for issue in issues:
             # TODO: Remove official posts
             # if issue['author_association'] != 'NONE' and 'pull_request' not in issue.keys():
