@@ -1,3 +1,11 @@
+# GitHub issue bot
+webbook_url:
+
+# FAQ generator
+API_BASE: "https://api.01ww.xyz/v1"
+API_KEY:
+
+# Dashboard
 github:
   token:
 Yi:
