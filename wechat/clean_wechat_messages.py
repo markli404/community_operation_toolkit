@@ -11,7 +11,7 @@ df = df[~df.StrContent.str.get(0).isin(['<', ''])]
 df = df[df['StrContent'].str.contains('拍了拍 ') == False]
 
 # remove emotes
-df['StrContent'] = df['StrContent'].str.replace('(\[(抱拳|呲牙|666|Party|Lol|捂脸|强|OK|Happy|尴尬|流泪|偷笑|奸笑|爱心|皱眉|耶|汗|Worship|旺柴|衰|勾引|让我看看|胜利|得意|握手|吃瓜|发呆|可怜|抠鼻)\])', "", regex=True)
+df['StrContent'] = df['StrContent'].str.replace('(\[(吃西瓜|通告|嘿哈|社会社会|阴险|加油|抱拳|玫瑰|呲牙|666|Party|Lol|捂脸|强|OK|Happy|尴尬|愉快|流泪|偷笑|奸笑|爱心|皱眉|耶|汗|Worship|旺柴|衰|勾引|让我看看|胜利|得意|握手|吃瓜|发呆|可怜|抠鼻)\])', "", regex=True)
 df.dropna(subset=['StrContent'], inplace=True)
 
 # remove unknown characters
@@ -34,10 +34,10 @@ df.dropna(subset=['StrContent'], inplace=True)
 # remove short messages
 df = df[df.StrContent.str.len() >= 3]
 
-
 # remove empty message
 df['StrContent'].replace('', np.nan, inplace=True)
 df['NickName'].replace('', np.nan, inplace=True)
+df['NickName'].replace('Yi User Group 中文社区', np.nan, inplace=True)
 df.dropna(subset=['StrContent'], inplace=True)
 df.dropna(subset=['NickName'], inplace=True)
 
