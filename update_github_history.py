@@ -151,5 +151,5 @@ def update_issue_history():
 
 # Main execution block to update GitHub star and issue history.
 if __name__ == "__main__":
-    # update_github_star()
+    update_github_star()
     update_issue_history()
