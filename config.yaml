@@ -1,13 +1,14 @@
 # GitHub issue bot
-webbook_url:
+webbook_url_gh_bot: 'your_webhook_url_goes_here'
+webhook_url_hf_bot: 'your_webhook_url_goes_here'
 
 # FAQ generator
-API_BASE: "https://api.01ww.xyz/v1"
-API_KEY:
+API_BASE: "https://api.lingyiwanwu.com/v1"
+API_KEY: "api_key"
 
 # Dashboard
 github:
-  token:
+  token: your_token_goes_here
 Yi:
   owner: 01-ai
   repo: Yi

@@ -35,7 +35,7 @@ def send_message(id, title, content, url):
         }
     }
 
-    resp = requests.post(config['webbook_url'], json=params)
+    resp = requests.post(config['webbook_url_gh_bot'], json=params)
     resp.raise_for_status()
     result = resp.json()
     if result.get("code") and result.get("code") != 0:

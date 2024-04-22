@@ -117,7 +117,7 @@ def sentiment_analysis():
 
     df_summary['create_at'] = pd.to_datetime(df_summary['create_at'])
 
-    export_to_excel(df_summary, "reddit_summary_1.xlsx")
+    export_to_excel(df_summary, "reddit_summary.xlsx")
 
 
 # Main execution block to update GitHub star and issue history.
