@@ -20,10 +20,10 @@ def main():
     parser.add_argument('--github', action='store_true', help='Generate GitHub issue records.')
     parser.add_argument('--filename', default='./wechat/message.csv', help='Path to generated WeChat message file. '
                                                                            'Default: ./wechat/message.csv')
-    parser.add_argument('--chunk', default=100, help='The size of each message chunk. Default: 100 messages per '
+    parser.add_argument('--chunk', default=100, help='The size of each message chunk. Default: 80 messages per '
                                                      'request.')
-    parser.add_argument('--overlap', default=20, help='The number of messages that overlaps with previous message '
-                                                      'chunk. Default: 20 message per chunk')
+    parser.add_argument('--overlap', default=15, help='The number of messages that overlaps with previous message '
+                                                      'chunk. Default: 15 message per chunk')
     parser.add_argument('--owner', default='01-ai', help='The owner of GitHub repo')
     parser.add_argument('--repo', default='Yi', help='The name of GitHub repo')
 

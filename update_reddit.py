@@ -53,7 +53,7 @@ def formatting_post(submission):
     summary_by_post = {
         'id': submission.id,
         'title': submission.title,
-        'url': submission.permalink,
+        'url': 'https://www.reddit.com' + submission.permalink,
         'author': submission.author.name,
         'create_at': datetime.fromtimestamp(submission.created),
         '# of comments': submission.num_comments,
@@ -94,24 +94,6 @@ def update_reddit_hisotry():
     export_to_excel(post_df, "reddit_post.xlsx")
 
 
-def response_to_json(response):
-    response = response.split('{')[1]
-    response = response.split('}')[0]
-
-    if response.endswith('。'):
-        response += '"'
-
-    if not response.endswith('\n'):
-        response += '\n'
-
-    response = '{' + response + '}'
-
-    response = response.replace('\\', '\\\\')
-
-    return json.loads(response)
-
-
-
 def sentiment_analysis():
     df_post = pd.read_excel('reddit_post.xlsx')
     df_summary = pd.read_excel('reddit_summary.xlsx')
@@ -125,7 +107,7 @@ def sentiment_analysis():
             content += f'comment: {comment}\n'
 
         response = api.get_SA_from_reddit_posts(content)
-        response = response_to_json(response)
+        response = api.response_to_json(response)
         additional_df.append(response)
 
         time.sleep(20)
@@ -135,13 +117,13 @@ def sentiment_analysis():
 
     df_summary['create_at'] = pd.to_datetime(df_summary['create_at'])
 
-    export_to_excel(df_summary, "reddit_summary.xlsx")
+    export_to_excel(df_summary, "reddit_summary_1.xlsx")
 
 
 # Main execution block to update GitHub star and issue history.
 if __name__ == "__main__":
-    # update_reddit_hisotry()
-    sentiment_analysis()
+    update_reddit_hisotry()
+    # sentiment_analysis()
 
 
 

@@ -61,9 +61,12 @@ def formatting_issue(repo, issue):
     issue_df = {}
     create_time = ISO_string_to_datetime(issue['created_at'])
     # Populate issue data including PR distinction, duration, and comments.
+    url = '/'.join(issue['url'].split('/')[-4:])
+    url = 'https://github.com/' + url
     issue_df['name'] = repo
     issue_df['number'] = issue['number']
     issue_df['title'] = issue['title']
+    issue_df['url'] = url
     issue_df['created_at'] = create_time.date()
     issue_df['state'] = issue['state']
     issue_df['author'] = issue['user']['login']
@@ -86,8 +89,8 @@ def formatting_issue(repo, issue):
     issue_df['# of comments'] = len(comments)
     for comment in comments:
         if comment['author_association'] in ['CONTRIBUTOR', 'MEMBER']:
-            issue_df['reply_time'] = datedelta_to_minutes(
-                ISO_string_to_datetime(comment['created_at']) - create_time) / 60
+            issue_df['reply_time'] = datedelta_to_minutes(ISO_string_to_datetime(comment['created_at']) - create_time) / 60
+            break
     return issue_df
 
 
